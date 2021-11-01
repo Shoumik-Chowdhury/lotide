@@ -1,16 +1,21 @@
 const tail = require('../tail');
-const assertEqual = require('../assertEqual')
+const assert = require('chai').assert;
 
-//TEST CASE
-const result = tail(["Hello", "Lighthouse", "Labs"]);
-assertEqual(result.length, 2); // ensure we get back two elements
-assertEqual(result[0], "Lighthouse");
-assertEqual(result[1], "Labs");
-
-const value = tail([1]);
-assertEqual(value.length, 0); //check if returns empty array
-
-//Check Original Array not altered
-const words = ["Yo Yo", "Lighthouse", "Labs"];
-tail(words);
-assertEqual(words.length, 3);
+describe("#tail", () => {
+  it("returns [\"Lighthouse\", \"Labs\"] for [\"Hello\", \"Lighthouse\", \"Labs\"]", () => {
+    const result = tail(["Hello", "Lighthouse", "Labs"]);
+    const expected = ["Lighthouse", "Labs"];
+    assert.deepEqual(result, expected);
+  });
+  it("returns [] for [5]", () => {
+    const result = tail([5]);
+    const expected = [];
+    assert.deepEqual(result, expected);
+  });
+  it("original array not altered, returns [1, 2, 3] for [1, 2, 3]", () => {
+    const originArr = [1, 2, 3];
+    tail(originArr);
+    const expected = [1, 2, 3];
+    assert.deepEqual(originArr, expected);
+  });
+});
